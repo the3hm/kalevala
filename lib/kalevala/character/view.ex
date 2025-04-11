@@ -80,8 +80,17 @@ defmodule Kalevala.Character.View.Macro do
   end
 
   defp sigil_i_unwrap(text) when is_binary(text) do
-    :elixir_interpolation.unescape_string(text)
+    if Code.ensure_loaded?(:elixir_interpolation) and function_exported?(:elixir_interpolation, :unescape_string, 1) do
+      :elixir_interpolation.unescape_string(text)
+    else
+      {:ok, tokens} = :elixir_tokenizer.string(String.to_charlist("~s\"#{text}\""), 1, [])
+      [token | _] = tokens
+      {_, _, unescaped, _} = token
+      unescaped
+    end
   end
+
+
 end
 
 defmodule Kalevala.Character.View.EExKalevala do
