@@ -22,7 +22,8 @@ defmodule Kalevala.Brain do
   @doc """
   Get a value from the brain's internal state store.
   """
-  @spec get(t(), any(), DateTime.t()) :: any()
+@spec get(t(), any(), Time.t()) :: any()
+
   def get(%__MODULE__{state: state}, key, compare_time \\ Time.utc_now()) do
     State.get(state, key, compare_time)
   end
@@ -30,7 +31,7 @@ defmodule Kalevala.Brain do
   @doc """
   Put a key/value into the brain's state, optionally with expiration.
   """
-  @spec put(t(), any(), any(), DateTime.t() | nil) :: t()
+  @spec put(t(), any(), any(), Time.t() | nil) :: t()
   def put(%__MODULE__{state: state} = brain, key, value, expires_at \\ nil) do
     updated_state = State.put(state, key, value, expires_at)
     %{brain | state: updated_state}

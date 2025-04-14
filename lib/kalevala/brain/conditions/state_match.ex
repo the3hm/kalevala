@@ -1,7 +1,7 @@
 defmodule Kalevala.Brain.Conditions.StateMatch do
-  @moduledoc \"\"\"
+  @moduledoc """
   Match values from character's brain state against the given condition.
-  \"\"\"
+  """
 
   @behaviour Kalevala.Brain.Condition
 

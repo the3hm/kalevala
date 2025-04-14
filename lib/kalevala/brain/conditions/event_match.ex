@@ -1,8 +1,8 @@
 defmodule Kalevala.Brain.Conditions.EventMatch do
-  @moduledoc \"\"\"
+  @moduledoc """
   Condition that matches event topic and data content.
   Optionally includes `self_trigger` control.
-  \"\"\"
+  """
 
   @behaviour Kalevala.Brain.Condition
 

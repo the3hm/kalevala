@@ -1,7 +1,7 @@
 defmodule Kalevala.Brain.Conditions.MessageMatch do
-  @moduledoc \"\"\"
+  @moduledoc """
   Condition that matches message topic and runs a regex on the message text.
-  \"\"\"
+  """
 
   @behaviour Kalevala.Brain.Condition
 
