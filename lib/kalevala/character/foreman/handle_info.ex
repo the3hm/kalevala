@@ -5,6 +5,8 @@ defmodule Kalevala.Character.Foreman.HandleInfo do
   alias Kalevala.Character.Foreman
   alias Kalevala.Event
 
+  require Logger
+
   def dispatch({:recv, :text, data}, state) do
     ConnHelpers.new_conn(state)
     |> state.controller.recv(data)

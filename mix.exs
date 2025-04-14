@@ -29,15 +29,15 @@ defmodule Kalevala.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:benchee, "~> 1.0", only: :dev},
-      {:credo, "~> 1.2", only: [:dev, :test], runtime: false},
-      {:ex_doc, "~> 0.21", only: :dev, runtime: false},
-      {:nimble_parsec, "~> 1.0"},
-      {:plug_cowboy, "~> 2.2", optional: true},
+      {:benchee, "~> 1.3", only: :dev},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:ex_doc, "~> 0.37.3", only: :dev, runtime: false},
+      {:nimble_parsec, "~> 1.4"},
+      {:plug_cowboy, "~> 2.7", optional: true},
       {:ranch, ">= 1.7.0 and < 3.0.0", optional: true},
-      {:telemetry, "~> 0.4.1"},
+      {:telemetry, "~> 1.3"},
       {:telnet, "~> 0.1"},
-      {:dialyxir, "~> 1.3", only: [:dev], runtime: false}
+      {:dialyxir, "~> 1.4", only: [:dev], runtime: false}
     ]
   end
 

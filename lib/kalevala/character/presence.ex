@@ -5,7 +5,9 @@ defmodule Kalevala.Character.Presence do
 
   use GenServer
 
+  alias KaLevala.Character
   alias Kalevala.Character.Presence.Implementation
+
 
   @doc """
   Notify the callback module that a character is online

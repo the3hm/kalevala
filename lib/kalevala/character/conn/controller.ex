@@ -2,8 +2,7 @@ defmodule Kalevala.Character.Conn.Controller do
   @moduledoc false
 
   def put_controller(conn, controller, flash \\ %{}) do
-    conn
-    |> put_private(:next_controller, controller)
+    put_private(conn, :next_controller, controller)
     |> put_private(:next_controller_flash, flash)
   end
 
