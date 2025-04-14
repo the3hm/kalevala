@@ -4,8 +4,8 @@ defmodule Kalevala.MixProject do
   def project do
     [
       app: :kalevala,
-      version: "0.1.0",
-      elixir: "~> 1.10",
+      version: "0.1.1",
+      elixir: "~> 1.18.3",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       description: description(),
@@ -36,7 +36,8 @@ defmodule Kalevala.MixProject do
       {:plug_cowboy, "~> 2.2", optional: true},
       {:ranch, ">= 1.7.0 and < 3.0.0", optional: true},
       {:telemetry, "~> 0.4.1"},
-      {:telnet, "~> 0.1"}
+      {:telnet, "~> 0.1"},
+      {:dialyxir, "~> 1.3", only: [:dev], runtime: false}
     ]
   end
 
@@ -44,6 +45,12 @@ defmodule Kalevala.MixProject do
     """
     Kalevala is a world building toolkit for text based games.
     """
+  end
+
+  defp aliases do
+    [
+      check: ["compile --warnings-as-errors", "test", "dialyzer"]
+    ]
   end
 
   defp package() do
