@@ -35,7 +35,7 @@ defmodule Kalevala.MixProject do
       {:ex_doc, "~> 0.37.3", only: :dev, runtime: false},
       {:nimble_parsec, "~> 1.4"},
       {:plug_cowboy, "~> 2.7", optional: true},
-      {:ranch, ">= 1.7.0 and < 3.0.0", optional: true},
+      {:ranch, "~> 2.2", optional: true},
       {:telemetry, "~> 1.3"},
       {:telnet, "~> 0.1"},
       {:dialyxir, "~> 1.4", only: [:dev], runtime: false}
