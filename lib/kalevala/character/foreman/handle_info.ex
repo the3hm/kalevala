@@ -2,7 +2,6 @@ defmodule Kalevala.Character.Foreman.HandleInfo do
   @moduledoc false
 
   alias Kalevala.Character.Foreman.ConnHelpers
-  alias Kalevala.Character.Foreman
   alias Kalevala.Event
 
   require Logger
@@ -19,13 +18,13 @@ defmodule Kalevala.Character.Foreman.HandleInfo do
     |> ConnHelpers.handle_conn(state)
   end
 
-  def dispatch(event = %Event{}, state) do
+  def dispatch(%Event{} = event, state) do
     ConnHelpers.new_conn(state)
     |> state.controller.event(event)
     |> ConnHelpers.handle_conn(state)
   end
 
-  def dispatch({:route, event = %Event{}}, state) do
+  def dispatch({:route, %Event{} = event}, state) do
     ConnHelpers.new_conn(state)
     |> Map.put(:events, [event])
     |> ConnHelpers.handle_conn(state)
@@ -58,7 +57,7 @@ defmodule Kalevala.Character.Foreman.HandleInfo do
       |> action.type.run(action.params)
       |> ConnHelpers.handle_conn(state)
     else
-      Logger.warn("Character tried processing an action that was not next", type: :foreman)
+      Logger.warning("Character tried processing an action that was not next", type: :foreman)
       {:noreply, state}
     end
   end

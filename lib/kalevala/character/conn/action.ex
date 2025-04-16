@@ -3,7 +3,6 @@ defmodule Kalevala.Character.Conn.Action do
 
   alias Kalevala.Meta
   alias Kalevala.Character.Conn.Private
-  alias Kalevala.Character.Conn
 
   @doc """
   Add an action (must be a Kalevala.Character.Action struct).

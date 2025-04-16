@@ -17,6 +17,19 @@ defmodule Kalevala.Character do
     meta: %{}
   ]
 
+  @typedoc "Character struct with essential runtime fields"
+  @type t :: %__MODULE__{
+          brain: any(),
+          description: String.t() | nil,
+          id: any(),
+          name: String.t() | nil,
+          pid: pid() | nil,
+          room_id: any(),
+          status: any(),
+          inventory: list(),
+          meta: map()
+        }
+
   defimpl Jason.Encoder do
     def encode(character, opts) do
       meta = Kalevala.Meta.trim(character.meta)

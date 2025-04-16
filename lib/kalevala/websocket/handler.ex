@@ -43,7 +43,7 @@ defmodule Kalevala.Websocket.Handler do
       {:ok, json} ->
         handle_in(json, state)
 
-      :error ->
+      {:error, %Jason.DecodeError{}} ->
         {:reply, {:text, "oops"}, state}
     end
   end

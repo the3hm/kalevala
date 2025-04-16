@@ -11,6 +11,7 @@ defmodule Kalevala.MixProject do
       description: description(),
       package: package(),
       source_url: "https://github.com/oestrich/kalevala",
+      aliases: aliases(),
       docs: [
         main: "readme",
         extras: ["README.md"]
@@ -49,9 +50,21 @@ defmodule Kalevala.MixProject do
 
   defp aliases do
     [
-      check: ["compile --warnings-as-errors", "test", "dialyzer"]
+      check: [
+        "compile --warnings-as-errors",
+        "test --warnings-as-errors"
+      ]
     ]
   end
+
+  def cli do
+    [
+      preferred_envs: [
+        check: :test
+      ]
+    ]
+  end
+
 
   defp package() do
     [

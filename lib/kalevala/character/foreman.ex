@@ -8,8 +8,7 @@ defmodule Kalevala.Character.Foreman do
   use GenServer
   require Logger
 
-  alias Kalevala.Character.Conn
-  alias Kalevala.Character.Foreman.{Callbacks, ConnHelpers, HandleInfo, Events, Action}
+  alias Kalevala.Character.Foreman.{ConnHelpers, HandleInfo, Events}
 
   @type t :: %__MODULE__{}
 
@@ -47,7 +46,11 @@ defmodule Kalevala.Character.Foreman do
   Start a new foreman for a non-player (NPC).
   """
   def start_non_player(options) do
-    options = Keyword.merge(options, callback_module: Kalevala.Character.Foreman.NonPlayer)
+    options =
+      Keyword.merge(options,
+        callback_module: Kalevala.Character.Foreman.NonPlayer
+      )
+
     DynamicSupervisor.start_child(options[:supervisor_name], {__MODULE__, options})
   end
 
@@ -72,11 +75,15 @@ defmodule Kalevala.Character.Foreman do
   end
 
   @impl true
-  def handle_continue(:init_controller, state),
-    do: ConnHelpers.new_conn(state) |> state.controller.init() |> ConnHelpers.handle_conn(state)
+  def handle_continue(:init_controller, state) do
+    state
+    |> ConnHelpers.new_conn()
+    |> state.controller.init()
+    |> ConnHelpers.handle_conn(state)
+  end
 
   # ----------------------------------------------------------------------------
-  # Message Routing (Delegated)
+  # Message Routing
   # ----------------------------------------------------------------------------
 
   @impl true
@@ -84,12 +91,14 @@ defmodule Kalevala.Character.Foreman do
     do: HandleInfo.dispatch(msg, state)
 
   # ----------------------------------------------------------------------------
-  # Public Helper
+  # Public Helper API
   # ----------------------------------------------------------------------------
 
   @doc false
-  def new_conn(state), do: ConnHelpers.new_conn(state)
+  def new_conn(state),
+    do: ConnHelpers.new_conn(state)
 
   @doc false
-  def send_events(conn), do: Events.send_events(conn)
+  def send_events(conn),
+    do: Events.send_events(conn)
 end

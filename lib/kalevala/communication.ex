@@ -137,10 +137,13 @@ defmodule Kalevala.Communication do
   end
 
   def publish(_channel_ets_key, channel_name, message, _options) do
-    Logger.warn("""
-    Trying to publish #{inspect(message)} on `#{channel_name}`.
-    Only events with a topic of #{__MODULE__} allowed.
-    """)
+    Logger.warning(
+  "Invalid publish attempt: #{inspect(message)} on channel `#{channel_name}`. Must use %Event{topic: Message}.",
+  channel: channel_name,
+  type: :invalid_channel_publish,
+  module: __MODULE__
+)
+
 
     :error
   end

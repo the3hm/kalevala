@@ -15,15 +15,22 @@ defmodule Kalevala.Character.Foreman.Channel do
   """
   def handle_channels(%{private: %{channel_changes: channel_changes}} = conn, state)
       when is_list(channel_changes) do
-    Enum.reduce(Enum.reverse(channel_changes), conn, fn channel_change, conn ->
-      handle_channel_change(channel_change, conn, state)
+    Enum.reduce(Enum.reverse(channel_changes), conn, fn channel_change, conn_acc ->
+      handle_channel_change(channel_change, conn_acc, state)
     end)
   end
 
-  def handle_channels(conn, state) do
-    Logger.warn("""
-    [foreman.channel] No valid channel changes found for character #{conn.character.id}, skipping.
-    """)
+  def handle_channels(conn, _state) do
+    message =
+      case conn do
+        %{character: %{id: id}} ->
+          "[foreman.channel] No valid channel changes found for character #{id}, skipping."
+
+        _ ->
+          "[foreman.channel] No valid channel changes and character info is malformed. Conn: #{inspect(conn, pretty: true, limit: :infinity)}"
+      end
+
+    Logger.warning(message)
     conn
   end
 
@@ -34,7 +41,10 @@ defmodule Kalevala.Character.Foreman.Channel do
         conn
 
       {:error, reason} ->
-        Logger.error("[foreman.channel] Subscription failed for #{conn.character.id} to #{channel_name}: #{inspect(reason)}")
+        Logger.error(
+          "[foreman.channel] Subscription failed for #{conn.character.id} to #{channel_name}: #{inspect(reason)}"
+        )
+
         error_fun.(conn, {:error, reason})
     end
   end
@@ -46,7 +56,10 @@ defmodule Kalevala.Character.Foreman.Channel do
         conn
 
       {:error, reason} ->
-        Logger.error("[foreman.channel] Unsubscription failed for #{conn.character.id} from #{channel_name}: #{inspect(reason)}")
+        Logger.error(
+          "[foreman.channel] Unsubscription failed for #{conn.character.id} from #{channel_name}: #{inspect(reason)}"
+        )
+
         error_fun.(conn, {:error, reason})
     end
   end
@@ -58,7 +71,10 @@ defmodule Kalevala.Character.Foreman.Channel do
         conn
 
       {:error, reason} ->
-        Logger.error("[foreman.channel] Publish failed to #{channel_name} by #{conn.character.id}: #{inspect(reason)}")
+        Logger.error(
+          "[foreman.channel] Publish failed to #{channel_name} by #{conn.character.id}: #{inspect(reason)}"
+        )
+
         error_fun.(conn, {:error, reason})
     end
   end
